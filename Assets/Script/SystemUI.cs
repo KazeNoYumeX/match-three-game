@@ -81,7 +81,7 @@ public class SystemUI : MonoBehaviour {
     }
 
     // 播放獎勵動畫
-    public void playScore(Sprite scoreSprite) {
+    public void PlayScore(Sprite scoreSprite) {
         scorePanel.SetActive(false);
         if (PlayScoreAnimition != null) {
             StopCoroutine(PlayScoreAnimition);

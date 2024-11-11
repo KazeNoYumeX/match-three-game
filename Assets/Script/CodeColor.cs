@@ -1,33 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CodeColor : MonoBehaviour {
-
-    public enum ColorType {
-        Yellow,
-        Green,
-        Violet,
-        Pink,
-        Blue,
-        Red,
-    }
-
     [System.Serializable]
     public struct ColorSprite {
-        public ColorType colorType;
+        [FormerlySerializedAs("colorType")] public TileColor tileColor;
         public Sprite colorsprite;
     }
     
     public ColorSprite[] Sprites;
 
     // 顏色字典
-    public Dictionary<ColorType, Sprite> ColorDic;
+    public Dictionary<TileColor, Sprite> ColorDic;
 
     // 顏色狀態
-    public ColorType Spritecolor;
+    public TileColor Spritecolor;
 
-    public ColorType getColor {
+    public TileColor GetTileColor {
         get { return Spritecolor; }
         set { Spritecolor = value; }
     }
@@ -38,31 +29,29 @@ public class CodeColor : MonoBehaviour {
     {
         spriteCompent = transform.Find("code").GetComponent<SpriteRenderer>();
 
-        ColorDic = new Dictionary<ColorType, Sprite>();
+        ColorDic = new Dictionary<TileColor, Sprite>();
 
         for (int i = 0; i < Sprites.Length; i++) {
-            if (!ColorDic.ContainsKey(Sprites[i].colorType)) {
-                ColorDic.Add(Sprites[i].colorType, Sprites[i].colorsprite);
+            if (!ColorDic.ContainsKey(Sprites[i].tileColor)) {
+                ColorDic.Add(Sprites[i].tileColor, Sprites[i].colorsprite);
             }
         }
-
-
     }
 
     // 指定顏色
-    public void setSprite(ColorType colorType_) {
+    public void setSprite(TileColor tileColor) {
 
-        Spritecolor = colorType_;
+        Spritecolor = tileColor;
 
-        if (ColorDic.ContainsKey(colorType_)) {
-            spriteCompent.sprite = ColorDic[colorType_];
+        if (ColorDic.ContainsKey(tileColor)) {
+            spriteCompent.sprite = ColorDic[tileColor];
         }
     }
 
     // 隨機指定顏色
     public void setRangeSprite() {
         int ran = Random.Range(0 , Sprites.Length);
-        Spritecolor = (ColorType)ran;
+        Spritecolor = (TileColor)ran;
 
         if (ColorDic.ContainsKey(Spritecolor))
         {

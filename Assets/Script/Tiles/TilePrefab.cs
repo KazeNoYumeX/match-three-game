@@ -1,37 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class CodePrefab : MonoBehaviour {
-    public int X;
-    public int Y;
-    private Grid.CodeType type;
-    private Grid grid;
+public class TilePrefab : MonoBehaviour {
+    public int x;
+    public int y;
+    private TileType _type;
+    private MatchUnityGame _matchUnityGame;
     private CodeMove MoveComponent;
     private CodeColor ColorComponent;
     public AnimationClip clearAnimation;
 
     public int getX {
-        get { return X; }
-        set { X = value; }
+        get { return x; }
+        set { x = value; }
     }
 
     public int getY {
-        get { return Y; }
-        set { Y = value; }
+        get { return y; }
+        set { y = value; }
     }
 
-    public Grid getGrid {
-        get { return grid; }
+    public MatchUnityGame GetMatchUnityGame {
+        get { return _matchUnityGame; }
     }
 
-    public Grid.CodeType getCodeType {
-        get { return type; }
+    public TileType GetType {
+        get { return _type; }
     }
 
     public CodeMove getMoveComponent {
         get {
-            if (MoveComponent == null || MoveComponent.CodePrefabCompent == null) {
+            if (MoveComponent == null || MoveComponent.TilePrefabCompent == null) {
                 MoveComponent = GetComponent<CodeMove>();
                 MoveComponent.initMoveCompent(this);
             }
@@ -48,11 +49,11 @@ public class CodePrefab : MonoBehaviour {
         }
     }
 
-    public void initPos(int x, int y, Grid grid_ , Grid.CodeType codeT) {
-        X = x;
-        Y = y;
-        grid = grid_;
-        type = codeT;
+    public void initPos(int x, int y, MatchUnityGame matchUnityGame , TileType tileT) {
+        this.x = x;
+        this.y = y;
+        _matchUnityGame = matchUnityGame;
+        _type = tileT;
     }
 
     // 清除方塊

@@ -8,10 +8,8 @@ public class GameOver : MonoBehaviour {
 
     //  剩餘時間
     private int gameTime = 0;
-    
-    private Player player;
 
-    private Grid gridComponent;
+    private MatchUnityGame _matchUnityGameComponent;
     // 分數
     public Text scoreText;
     // 時間
@@ -29,25 +27,24 @@ public class GameOver : MonoBehaviour {
 
     private void OnGUI()
     {
-        if(player != null)
+        if(_matchUnityGameComponent != null)
         {
-            int score = player.getScore();
+            int score = _matchUnityGameComponent.getScore();
             scoreText.text = score + "";
         }
         
         timeText.text = gameTime + "";
     }
 
-    public void initGameOver(int gametime , Grid grid, Player player) {
-        this.player = player;
+    public void initGameOver(int gametime , MatchUnityGame matchUnityGame) {
         gameTime = gametime;
-        gridComponent = grid;
+        _matchUnityGameComponent = matchUnityGame;
         StartCoroutine(timeConteller());
     }
 
     private IEnumerator timeConteller() {
         while (gameTime > 0) {
-            if (gridComponent.getSystemUI.IsGame) {
+            if (_matchUnityGameComponent.getSystemUI.IsGame) {
                 gameTime -= 1;
                 if (gameTime <= 0) {
                     gameOver();
@@ -58,18 +55,19 @@ public class GameOver : MonoBehaviour {
         }
     }
 
-    public void addScore(int s) {
-        player.addScore(s);
+    public void AddScore(int s) {
+        _matchUnityGameComponent.addScore(s);
         scoreText.GetComponent<Animator>().Play(TextAnimation.name);
     }
 
-    public void addTime(int t) {
+    public void AddTime(int t) {
         gameTime += t;
         timeText.GetComponent<Animator>().Play(TextAnimation.name);
     }
+    
     public void gameOver() {
         isGameOver = true;
-        int score = player.getScore();
+        int score = _matchUnityGameComponent.getScore();
         finelScoreText.text = score + "";
         OverPanel.SetActive(true);
         OverPanel.GetComponent<Animator>().Play(overAnimation.name);

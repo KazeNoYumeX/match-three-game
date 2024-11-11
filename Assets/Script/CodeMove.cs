@@ -3,47 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CodeMove : MonoBehaviour {
-    private CodePrefab codePrefab;
-    private IEnumerator MoveAnimtion;
+    private TilePrefab _tilePrefab;
+    private IEnumerator _moveAnimation;
     private bool isMoveing = false;
 
     public bool IsMoveIng {
         get { return isMoveing; }
     }
 
-    public CodePrefab CodePrefabCompent {
-        get { return codePrefab; }
+    public TilePrefab TilePrefabCompent {
+        get { return _tilePrefab; }
     }
-    public void initMoveCompent(CodePrefab code) {
-        codePrefab = code;
+    public void initMoveCompent(TilePrefab tile) {
+        _tilePrefab = tile;
     }
 
     public void MoveToPos(int X , int Y , float fillTime) {
 
-        if (MoveAnimtion != null) {
-            StopCoroutine(MoveAnimtion);
+        if (_moveAnimation != null) {
+            StopCoroutine(_moveAnimation);
         }
-        MoveAnimtion = Move(X , Y , fillTime);
-        StartCoroutine(MoveAnimtion);
+        _moveAnimation = Move(X , Y , fillTime);
+        StartCoroutine(_moveAnimation);
     }
 
     public void MoveBackToPos(int X, int Y, float fillTime) {
-        if (MoveAnimtion != null)
+        if (_moveAnimation != null)
         {
-            StopCoroutine(MoveAnimtion);
+            StopCoroutine(_moveAnimation);
         }
-        MoveAnimtion = MoveBack(X , Y , fillTime);
-        StartCoroutine(MoveAnimtion);
+        _moveAnimation = MoveBack(X , Y , fillTime);
+        StartCoroutine(_moveAnimation);
     }
 
     private IEnumerator Move(int newx , int newy , float fillTime) {
         isMoveing = true;
 
-        codePrefab.getX = newx;
-        codePrefab.getY = newy;
+        _tilePrefab.getX = newx;
+        _tilePrefab.getY = newy;
 
         Vector3 startPos = transform.position;
-        Vector3 endPos = codePrefab.getGrid.NumToVector(newx , newy);
+        Vector3 endPos = _tilePrefab.GetMatchUnityGame.NumToVector(newx , newy);
 
         for (float t = 0; t <= fillTime; t += Time.deltaTime) {
 
@@ -60,7 +60,7 @@ public class CodeMove : MonoBehaviour {
     private IEnumerator MoveBack(int newx, int newy, float fillTime) {
         isMoveing = true;
         Vector3 startPos = transform.position;
-        Vector3 endPos = codePrefab.getGrid.NumToVector(newx, newy);
+        Vector3 endPos = _tilePrefab.GetMatchUnityGame.NumToVector(newx, newy);
 
         for (float t = 0; t <= fillTime; t += Time.deltaTime)
         {
@@ -85,20 +85,20 @@ public class CodeMove : MonoBehaviour {
     {
         if (!isMoveing)
         {
-            CodePrefabCompent.getGrid.DownCode(CodePrefabCompent);
+            TilePrefabCompent.GetMatchUnityGame.DownCode(TilePrefabCompent);
         }
     }
     // 滑鼠指向時
     private void OnMouseEnter()
     {
         if (!isMoveing) {
-            CodePrefabCompent.getGrid.EnterCode(CodePrefabCompent);
+            TilePrefabCompent.GetMatchUnityGame.EnterCode(TilePrefabCompent);
         }
     }
 
     // 滑鼠抬起時
     private void OnMouseUp()
     {
-        CodePrefabCompent.getGrid.UpCode();
+        TilePrefabCompent.GetMatchUnityGame.UpCode();
     }
 }
