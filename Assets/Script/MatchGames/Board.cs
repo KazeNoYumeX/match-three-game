@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-public class Board
+public class Board:ScriptableObject
 {
 	public int Width;
 	public int Height;
-
+	public GameObject bgCode;
+	
 	public Coordinate[,] Coordinates;
 	
 	public Board(int width, int height)

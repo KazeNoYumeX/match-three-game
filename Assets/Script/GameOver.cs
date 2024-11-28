@@ -39,7 +39,20 @@ public class GameOver : MonoBehaviour {
     public void initGameOver(int gametime , MatchUnityGame matchUnityGame) {
         gameTime = gametime;
         _matchUnityGameComponent = matchUnityGame;
-        StartCoroutine(timeConteller());
+
+
+        if (matchUnityGame.mode == MatchGameMode.TimeMode) {
+            StartCoroutine(timeConteller());
+        }
+        else
+        {
+            // disable time text
+            timeText.gameObject.SetActive(false);
+            
+            // get time label and disable it
+            GameObject.Find("Time").SetActive(false);
+        }
+        
     }
 
     private IEnumerator timeConteller() {

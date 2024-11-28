@@ -9,8 +9,9 @@ public class MatchUnityGame : MonoBehaviour {
     public int width;
     public float fillTime = 0.1f;
     public GameObject bgCode;
+    public MatchGameMode mode;
 
-    public Tile[] NomalCodes;
+    public Tile[] normalCodes;
 
     public Dictionary<TileType, GameObject> piecePrefabDict;
 
@@ -59,11 +60,11 @@ public class MatchUnityGame : MonoBehaviour {
         gridCodes = new TilePrefab[height , width];
 
         // 初始化預設 Object
-        for (int i = 0; i < NomalCodes.Length; i++)
+        for (int i = 0; i < normalCodes.Length; i++)
         {
-            if (!piecePrefabDict.ContainsKey(NomalCodes[i].type))
+            if (!piecePrefabDict.ContainsKey(normalCodes[i].type))
             {
-                piecePrefabDict.Add(NomalCodes[i].type, NomalCodes[i].codePrefab);
+                piecePrefabDict.Add(normalCodes[i].type, normalCodes[i].codePrefab);
             }
         }
     }
@@ -423,9 +424,9 @@ public class MatchUnityGame : MonoBehaviour {
     
     
     // 分數增加
-    public void UpdateScore(int CodeCount)
+    public void UpdateScore(int codeCount)
     {
-        switch (CodeCount)
+        switch (codeCount)
         {
             case 4:
                 _gameOverComponent.AddScore(8);
@@ -438,7 +439,7 @@ public class MatchUnityGame : MonoBehaviour {
                 _systemUIComponent.PlayScore(five);
                 break;
             case > 5:
-                _gameOverComponent.AddScore((int)(CodeCount*2.5f));
+                _gameOverComponent.AddScore((int)(codeCount*2.5f));
                 _gameOverComponent.AddTime(15);
                 break;
             default:
